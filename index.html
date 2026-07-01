@@ -5,24 +5,54 @@
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>الكبائن الخشبية | Wooden Cabin — SMOU GROUP</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --navy:#0b1b2b;
-  --navy2:#12324f;
-  --silver:#9fb3c8;
-  --silver2:#6e8aa6;
-  --bg:#f4f8fc;
-  --card:#ffffff;
-  --shadow:0 10px 30px rgba(0,0,0,.15);
+  --bg1:#03060d;
+  --bg2:#081527;
+  --sky:#8fd6ff;
+  --sky-light:#d7f1ff;
+  --sky-deep:#3d8fd0;
+  --ivory:#ffffff;
+  --text:#eef6ff;
+  --muted:rgba(238,246,255,.68);
+  --border:rgba(143,214,255,.22);
+  --glass: linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+  --shadow:0 18px 45px rgba(0,0,10,.40);
+  --shadowStrong:0 30px 80px rgba(0,0,10,.55);
 }
 
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  font-family:system-ui;
-  background:var(--bg);
-  color:#111;
+  font-family:"Tajawal", system-ui, sans-serif;
+  background:linear-gradient(180deg,#03060d,#081527 55%,#050d1a);
+  color:var(--text);
+  overflow-x:hidden;
+  position:relative;
 }
+
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  inset:auto;
+  width:34vw;
+  height:34vw;
+  border-radius:50%;
+  filter:blur(110px);
+  opacity:.16;
+  pointer-events:none;
+  z-index:0;
+  animation:blobFloat 12s ease-in-out infinite;
+}
+body::before{ top:-8vw; right:-6vw; background:radial-gradient(circle, rgba(143,214,255,.9), transparent 64%); }
+body::after{ left:-8vw; bottom:-10vw; background:radial-gradient(circle, rgba(255,255,255,.3), transparent 60%); animation-delay:-5s; }
+@keyframes blobFloat{ 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-16px) scale(1.06)} }
 
 /* ===== HERO ===== */
 .hero{
@@ -30,20 +60,25 @@ body{
   padding:40px 0;
   color:#fff;
   position:relative;
+  overflow:hidden;
   background:
     url("back.webp") center/cover no-repeat,
     url("back.jpg") center/cover no-repeat,
     url("back.png") center/cover no-repeat,
-    linear-gradient(180deg,var(--navy),var(--navy2));
+    linear-gradient(180deg, var(--bg2), var(--bg1));
 }
 .hero::before{
   content:"";
   position:absolute;
   inset:0;
-  background:linear-gradient(180deg,rgba(0,0,0,.65),rgba(0,0,0,.65));
+  background:
+    radial-gradient(900px 400px at 20% 10%, rgba(143,214,255,.16), transparent 55%),
+    radial-gradient(800px 380px at 85% 15%, rgba(215,241,255,.10), transparent 55%),
+    linear-gradient(180deg, rgba(3,6,13,.68), rgba(5,10,20,.86));
 }
 .container{
   position:relative;
+  z-index:1;
   max-width:1300px;
   margin:auto;
   padding:0 20px;
@@ -64,26 +99,37 @@ body{
 }
 
 .logo{
-  width:50px;height:50px;
-  border-radius:12px;
-  background:rgba(255,255,255,.15);
+  width:52px;height:52px;
+  border-radius:14px;
+  background:var(--glass);
+  border:1px solid var(--border);
   display:flex;
   align-items:center;
   justify-content:center;
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  box-shadow:0 12px 22px rgba(0,0,10,.3);
 }
 .logo img{
-  width:80%;
-  height:80%;
+  width:78%;
+  height:78%;
   object-fit:contain;
+  filter:drop-shadow(0 4px 8px rgba(0,0,10,.4));
 }
 
 .titleBox h1{
   margin:0;
-  font-size:20px;
+  font-size:19px;
+  font-weight:800;
+  background:linear-gradient(90deg,#ffffff 0%,#d7f1ff 45%,#8fd6ff 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
 }
 .titleBox span{
   font-size:12px;
-  opacity:.9;
+  color:var(--muted);
+  letter-spacing:1px;
 }
 
 .heroText{
@@ -91,15 +137,21 @@ body{
 }
 .heroText h2{
   margin:0;
-  font-size:28px;
+  font-size:27px;
+  font-weight:800;
+  color:var(--ivory);
 }
 .heroText p{
   margin-top:10px;
-  opacity:.9;
+  color:var(--muted);
+  font-size:14.5px;
+  line-height:1.8;
 }
 
 /* ===== Gallery ===== */
 main{
+  position:relative;
+  z-index:1;
   max-width:1300px;
   margin:40px auto;
   padding:0 20px;
@@ -110,65 +162,88 @@ main{
   gap:20px;
   overflow:auto;
   scroll-snap-type:x mandatory;
-  padding-bottom:10px;
+  padding-bottom:12px;
 }
+.track::-webkit-scrollbar{ height:8px; }
+.track::-webkit-scrollbar-thumb{ background:rgba(143,214,255,.35); border-radius:999px; }
+.track::-webkit-scrollbar-track{ background:rgba(255,255,255,.04); border-radius:999px; }
 
 .card{
   min-width:250px;
-  background:var(--card);
-  border-radius:15px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:18px;
   overflow:hidden;
-  box-shadow:var(--shadow);
+  box-shadow:0 14px 30px rgba(0,0,10,.35);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
   scroll-snap-align:start;
   cursor:pointer;
-  transition:.25s;
+  transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 .card:hover{
   transform:translateY(-6px);
+  border-color:rgba(143,214,255,.55);
+  box-shadow:0 26px 48px rgba(0,0,10,.5), 0 0 26px rgba(143,214,255,.14);
 }
 
 .thumb{
   aspect-ratio:3/4;
   overflow:hidden;
+  background:rgba(255,255,255,.04);
 }
 .thumb img{
   width:100%;
   height:100%;
   object-fit:cover;
+  transition:transform .3s ease;
 }
+.card:hover .thumb img{transform:scale(1.06);}
 
 .meta{
-  padding:15px;
+  padding:14px 15px;
   display:flex;
   justify-content:space-between;
   align-items:center;
+  border-top:1px solid var(--border);
 }
 
 .meta b{
-  color:var(--navy2);
+  color:var(--ivory);
+  font-size:15px;
 }
 
 .open{
   text-decoration:none;
-  background:var(--silver);
+  background:linear-gradient(160deg, rgba(143,214,255,.22), rgba(143,214,255,.08));
+  border:1px solid rgba(143,214,255,.4);
   color:#fff;
   padding:8px 14px;
   border-radius:10px;
   font-size:13px;
+  font-weight:700;
+  transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
 }
 .open:hover{
-  background:var(--silver2);
+  background:linear-gradient(160deg, rgba(143,214,255,.35), rgba(143,214,255,.14));
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px rgba(143,214,255,.2);
 }
 
 footer{
+  position:relative;
+  z-index:1;
   text-align:center;
-  padding:20px;
+  padding:24px 20px 30px;
   font-size:12px;
-  color:#666;
+  color:var(--muted);
+  letter-spacing:.4px;
 }
 
 @media(max-width:600px){
-  .card{min-width:210px}
+  .card{min-width:190px}
+  .heroText{margin-top:60px}
+  .heroText h2{font-size:22px}
 }
 </style>
 </head>
@@ -247,4 +322,3 @@ items.forEach(it=>{
 
 </body>
 </html>
-
